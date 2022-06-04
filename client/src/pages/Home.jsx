@@ -11,7 +11,7 @@ function Home() {
     setCurrentUser(data.currentUser);
   }, []);
   return (
-    <div className=" h-full flex flex-col flex-end items-center bg-bgColor">
+    <div className=" h-full  flex flex-col flex-end items-center bg-bgColor">
       <div className="comments-list flex flex-col gap-5 items-end  px-4 py-6">
         {/* Comments */}
         {comments
