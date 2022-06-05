@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import data from "../asserts/data.json";
 import Comment from "../Components/Comment";
 import AddComment from "../Components/AddComment";
+
 function Home() {
   const [comments, setComments] = useState("");
   const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
-    setComments(data.comments);
-    setCurrentUser(data.currentUser);
+    axios.get("http://localhost:5000/comment").then((res) => {
+      console.log(res.data)
+      setComments(res.data[0].comments);
+      setCurrentUser(res.data[0].currentUser);
+    });
   }, []);
   return (
     <div className=" h-full  flex flex-col flex-end items-center bg-bgColor">
