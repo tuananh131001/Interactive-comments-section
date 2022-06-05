@@ -7,13 +7,14 @@ import AddComment from "../Components/AddComment";
 function Home() {
   const [comments, setComments] = useState("");
   const [currentUser, setCurrentUser] = useState("");
-
-  useEffect(() => {
+  function loadComments() {
     axios.get("http://localhost:5000/comment").then((res) => {
-      console.log(res.data)
-      setComments(res.data[0].comments);
-      setCurrentUser(res.data[0].currentUser);
+      setComments(res.data);
+      // setCurrentUser(res.data[0].currentUser);
     });
+  }
+  useEffect(() => {
+    loadComments()
   }, []);
   return (
     <div className=" h-full  flex flex-col flex-end items-center bg-bgColor">
@@ -22,13 +23,13 @@ function Home() {
         {comments
           ? comments.map((comment) => (
               <div className="flex flex-col gap-5 ">
-                <Comment commentData={comment}></Comment>
+                <Comment key={comment._id} commentId={comment._id} commentData={comment}></Comment>
                 {/* Sub comments of the comment */}
                 <div className="sub-comments flex flex-col items-end gap-5 border-line border-l-2">
                   {comment.replies
                     ? comment.replies.map((child) => (
                         <div className="w-11/12">
-                          <Comment commentData={child}></Comment>
+                          <Comment key={comment._id} commentId={comment._id} loadComment={loadComments()} commentData={child}></Comment>
                         </div>
                       ))
                     : null}
@@ -36,9 +37,8 @@ function Home() {
               </div>
             ))
           : null}
-        {currentUser ? (
-          <AddComment userImage={currentUser.image.png}></AddComment>
-        ) : null}
+
+        <AddComment loadComment = {loadComments()}></AddComment>
       </div>
     </div>
   );

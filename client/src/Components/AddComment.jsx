@@ -1,14 +1,14 @@
+import axios from "axios";
 import React, { useState } from "react";
-import data from "../asserts/data.json";
 
-function AddComment({ userImage }) {
+function AddComment({ userImage,loadComment }) {
   const [newComment, setNewComment] = useState("");
   const printComment = () => {
     let newCommentObject = {
       id: 3,
-      content: { newComment },
+      content: newComment,
       createdAt: "1 month ago",
-      score: 12,
+      score: 0,
       user: {
         image: {
           png: "./images/avatars/image-amyrobson.png",
@@ -18,8 +18,12 @@ function AddComment({ userImage }) {
       },
       replies: [],
     };
-    data.comments.push(newCommentObject);
-    console.log(data.comments)
+    axios
+      .post("http://localhost:5000/comment", newCommentObject)
+      .then((res) => {
+        console.log(res)
+        loadComment()
+      });
   };
   return (
     <>
@@ -27,12 +31,12 @@ function AddComment({ userImage }) {
         <textarea
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          class="textarea textarea-bordered w-full"
+          className="textarea textarea-bordered w-full"
           placeholder="Add a comment..."
         ></textarea>
         <div className="bottom flex justify-between items-center">
           <img src={`src/asserts/${userImage}`} alt="" className=" w-8" />
-          <button className="btn btn-primary" onClick={printComment()}>
+          <button className="btn btn-primary" onClick={(x) => printComment()}>
             SEND
           </button>
         </div>

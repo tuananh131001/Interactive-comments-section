@@ -1,18 +1,16 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const commentEle = new mongoose.Schema({
-    content : String,
-    createdAt : String,
-    score: Number,
-    user : {
-        image:{
-            png: String ,
-            webp: String,
-        },
-        username : String,
+  content: String,
+  createdAt: String,
+  score: Number,
+  user: {
+    image: {
+      png: String,
+      webp: String,
     },
-    replies: []
-})
-const commentList = new mongoose.Schema({
-    comments : [commentEle],
-})
-module.exports = mongoose.model("Comment", commentList);
+    username: String,
+  },
+  replies: [],
+});
+
+module.exports = mongoose.model("Comment", commentEle);

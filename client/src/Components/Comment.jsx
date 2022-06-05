@@ -1,7 +1,14 @@
+import axios from "axios";
+import { comment } from "postcss";
 import React, { useState, useEffect, createContext } from "react";
 import { FaReply } from "react-icons/fa";
 
-function Comment({ commentData }) {
+function Comment({ commentData, commentId, loadComment }) {
+  const deleteComment = (id) => {
+    axios.delete(`http://localhost:5000/comment/${id}`).then((res) => {
+      loadComment();
+    });
+  };
   return (
     <>
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 ">
@@ -30,6 +37,12 @@ function Comment({ commentData }) {
               {commentData.score}
             </button>
             <button className="text-upDown">-</button>
+            <button
+              className="btn btn-sm"
+              onClick={(x) => deleteComment(commentId)}
+            >
+              Delete
+            </button>
           </div>
           <div className="reply flex gap-2 items-center">
             {" "}
