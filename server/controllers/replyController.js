@@ -1,0 +1,39 @@
+const Comment = require("../models/Comment");
+
+const replyComment = async (req, res) => {
+  const replyContent = req.body.content;
+  const parentId = req.body.parentId;
+  const replyTo = req.body.replyingTo;
+
+  const createdAt = "0 seconds ago";
+  const score = 0;
+  console.log("active");
+  Comment.findById(parentId, async (err, comment) => {
+    const commentReply = {
+      content: replyContent,
+      createdAt: createdAt,
+      score: score,
+      replyingTo: replyTo,
+      user: req.body.user,
+    };
+    await comment.replies.push(commentReply);
+    await comment.save((err) => {
+      err ? console.log(err) : console.log("reply saved");
+    });
+    await res.redirect("/comment");
+  });
+};
+
+const deleteReply = async (req, res) => {
+  if (req.body.parent && req.body.child) {
+    res.reply = await Comment.findById(req.body.parent, (err, comment) => {
+      comment.replies.id(req.body.child).remove();
+      comment.save();
+    }).clone().catch(function(err){ console.log(err)})
+  }
+  res.status(200).json({ message: "Deleted " });
+};
+module.exports = {
+  replyComment,
+  deleteReply,
+};
