@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 const HOST = import.meta.env.VITE_URL;
 
-function AddComment({ userImage, loadComment, replyTo }) {
+function AddComment({ userImage, loadComment, replyTo, commentInput }) {
   const [newComment, setNewComment] = useState("");
   const postComment = () => {
     let newCommentObject = {
@@ -25,6 +25,8 @@ function AddComment({ userImage, loadComment, replyTo }) {
     });
   };
   const replyToComment = (replyTo) => {
+    const removed = newComment.substring(newComment.indexOf(" ") + 1);
+    console.log(removed)
     let replyCommentObject = {
       parentId: replyTo,
       content: newComment,
@@ -54,7 +56,7 @@ function AddComment({ userImage, loadComment, replyTo }) {
     <>
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 w-full ">
         <textarea
-          value={newComment}
+          ref={commentInput}
           onChange={(e) => setNewComment(e.target.value)}
           className="textarea textarea-bordered w-full"
           placeholder="Add a comment..."

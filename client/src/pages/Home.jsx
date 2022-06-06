@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useId } from "react";
+import React, { useState, useEffect, useId, createContext,useRef } from "react";
 import axios from "axios";
 import data from "../asserts/data.json";
 import Comment from "../Components/Comment";
@@ -9,6 +9,8 @@ function Home() {
   const [comments, setComments] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [replyTo, setReplyTo] = useState("");
+  const commentInput = useRef();
+
 
   const idAddComment = useId();
   function loadComments() {
@@ -21,7 +23,7 @@ function Home() {
     loadComments();
   }, []);
   return (
-    <div className=" h-full  flex flex-col flex-end items-center bg-bgColor">
+    <div className=" h-screen  flex flex-col flex-end items-center bg-bgColor">
       <div className="comments-list flex flex-col gap-5 items-end  px-4 py-6">
         {/* Comments */}
         {comments
@@ -34,6 +36,7 @@ function Home() {
                   commentData={parentComment}
                   loadComment={loadComments}
                   replyTo={setReplyTo}
+                  commentInput={commentInput}
                 ></Comment>
                 {/* Sub comments of the comment */}
                 <div className="sub-comments flex flex-col items-end gap-5 border-line border-l-2">
@@ -50,6 +53,7 @@ function Home() {
                             commentData={child}
                             loadComment={loadComments}
                             replyTo={setReplyTo}
+                            commentInput={commentInput}
                           ></Comment>
                         </div>
                       ))
@@ -61,6 +65,7 @@ function Home() {
 
         <AddComment
           key={idAddComment}
+          commentInput={commentInput}
           loadComment={loadComments}
           replyTo={replyTo}
         ></AddComment>

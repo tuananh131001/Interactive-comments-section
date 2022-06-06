@@ -1,6 +1,6 @@
 import axios from "axios";
 import { comment } from "postcss";
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useRef } from "react";
 import { FaReply } from "react-icons/fa";
 import CommentContent from "./CommentContent";
 import UpdateComment from "./UpdateComment";
@@ -13,9 +13,9 @@ function Comment({
   loadComment,
   replyTo,
   setComments,
+  commentInput
 }) {
   const [editStatus, setEditStatus] = useState(false);
-
   return (
     <>
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 ">
@@ -27,14 +27,7 @@ function Comment({
           />
           <h3 className="font-bold">{commentData.user.username}</h3>
           <h3 className="text-paragraph">{commentData.createdAt}</h3>
-          <button
-            className="btn btn-sm"
-            onClick={(x) =>
-              editStatus ? setEditStatus(false) : setEditStatus(true)
-            }
-          >
-            Edit
-          </button>
+
         </div>{" "}
         {editStatus ? (
           <UpdateComment
@@ -54,6 +47,9 @@ function Comment({
             isChild={isChild}
             childId={childId}
             parentId={parentId}
+            editStatus={editStatus}
+            setEditStatus={setEditStatus}
+            commentInput={commentInput}
           />
         )}
       </section>

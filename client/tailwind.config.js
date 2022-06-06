@@ -8,7 +8,9 @@ module.exports = {
       'upDown': '#5b5b91',
       'mention': '#7a7cb4',
       'paragraph': '#86868a',
-      'line': '#ececf1'
+      'line': '#ececf1',
+      'red': '#c37d86'
+
     },
     extend: {},
   },
