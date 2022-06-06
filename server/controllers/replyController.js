@@ -23,17 +23,35 @@ const replyComment = async (req, res) => {
     await res.redirect("/comment");
   });
 };
-
+const updateReply = async (req, res) => {
+  if (req.params.id) {
+    const comment = await Comment.findById(req.body.parent, (err, comment) => {
+      comment.replies.id(req.params.id).content = req.body.content;
+      comment.save();
+    })
+      .clone()
+      .catch(function (err) {
+        console.log(err);
+      });
+    const allComment = await Comment.find();
+    res.status(201).json(allComment);
+  }
+};
 const deleteReply = async (req, res) => {
   if (req.body.parent && req.body.child) {
     res.reply = await Comment.findById(req.body.parent, (err, comment) => {
       comment.replies.id(req.body.child).remove();
       comment.save();
-    }).clone().catch(function(err){ console.log(err)})
+    })
+      .clone()
+      .catch(function (err) {
+        console.log(err);
+      });
   }
   res.status(200).json({ message: "Deleted " });
 };
 module.exports = {
   replyComment,
   deleteReply,
+  updateReply,
 };

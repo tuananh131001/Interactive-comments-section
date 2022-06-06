@@ -12,7 +12,7 @@ function Comment({
   parentId,
   loadComment,
   replyTo,
-  setComments
+  setComments,
 }) {
   const [editStatus, setEditStatus] = useState(false);
 
@@ -37,7 +37,15 @@ function Comment({
           </button>
         </div>{" "}
         {editStatus ? (
-          <UpdateComment setComments={setComments} loadComment={loadComment} commentData={commentData} setEditStatus={setEditStatus}/>
+          <UpdateComment
+            isChild={isChild}
+            setComments={setComments}
+            loadComment={loadComment}
+            commentData={commentData}
+            childId={childId}
+            parentId={parentId}
+            setEditStatus={setEditStatus}
+          />
         ) : (
           <CommentContent
             replyTo={replyTo}

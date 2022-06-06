@@ -1,26 +1,43 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+const HOST = import.meta.env.VITE_URL;
 function UpdateComment({
   commentData,
   loadComment,
   setEditStatus,
   setComments,
+  isChild,
+  parentId,
+  childId,
 }) {
-  const [newComment, setNewComment] = useState();
-  const updateComment = (id, content) => {
+  const [newComment, setNewComment] = useState(commentData.content);
+
+  const updateComment = (parentId, content) => {
     const newContent = {
       content: content,
     };
-    axios.put("http://localhost:5000/comment/" + id, newContent).then((res) => {
+    axios.put(HOST + "/comment/" + parentId, newContent).then((res) => {
       setComments(res.data);
       loadComment();
       setEditStatus(false);
     });
   };
-  const handleUpdate = () =>{
-      
-  }
+  const updateReply = (parentId, childId, content) => {
+    const newContent = {
+      parent: parentId,
+      content: content,
+    };
+    axios.put(HOST + "/comment/reply/" + childId, newContent).then((res) => {
+      setComments(res.data);
+      loadComment();
+      setEditStatus(false);
+    });
+  };
+  const handleUpdate = (isChild, parentId, childId, newComment) => {
+    isChild
+      ? updateReply(parentId, childId, newComment)
+      : updateComment(parentId, newComment);
+  };
   return (
     <>
       {" "}
@@ -32,7 +49,7 @@ function UpdateComment({
         ></textarea>
         <button
           className="btn btn-sm"
-          onClick={(x) => updateComment(commentData._id, newComment)}
+          onClick={(x) => handleUpdate(isChild, parentId, childId, newComment)}
         >
           Submit
         </button>

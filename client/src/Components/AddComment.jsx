@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+const HOST = import.meta.env.VITE_URL;
 
 function AddComment({ userImage, loadComment, replyTo }) {
   const [newComment, setNewComment] = useState("");
@@ -17,13 +18,11 @@ function AddComment({ userImage, loadComment, replyTo }) {
       },
       replies: [],
     };
-    axios
-      .post("http://localhost:5000/comment", newCommentObject)
-      .then((res) => {
-        console.log(res);
-        console.log("comment ne")
-        loadComment();
-      });
+    axios.post(HOST + "/comment", newCommentObject).then((res) => {
+      console.log(res);
+      console.log("comment ne");
+      loadComment();
+    });
   };
   const replyToComment = (replyTo) => {
     let replyCommentObject = {
@@ -40,13 +39,11 @@ function AddComment({ userImage, loadComment, replyTo }) {
         username: "Cho Rach",
       },
     };
-    axios
-      .post("http://localhost:5000/comment/reply", replyCommentObject)
-      .then((res) => {
-        console.log(res);
-        console.log("reply")
-        loadComment();
-      });
+    axios.post(HOST + "/comment/reply", replyCommentObject).then((res) => {
+      console.log(res);
+      console.log("reply");
+      loadComment();
+    });
   };
   const doComment = () => {
     console.log(replyTo);

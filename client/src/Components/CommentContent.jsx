@@ -2,6 +2,7 @@ import axios from "axios";
 import { comment } from "postcss";
 import React, { useState, useEffect, createContext } from "react";
 import { FaReply } from "react-icons/fa";
+const HOST = import.meta.env.VITE_URL;
 
 function CommentContent({
   isChild,
@@ -19,7 +20,7 @@ function CommentContent({
     isChild ? deleteReply(childId, parentId) : deleteComment(parentId);
   };
   const deleteComment = (id) => {
-    axios.delete(`http://localhost:5000/comment/${id}`).then((res) => {
+    axios.delete(`${HOST}/comment/${id}`).then((res) => {
       loadComment();
     });
   };
@@ -29,7 +30,7 @@ function CommentContent({
       child: childId,
     };
     axios
-      .post(`http://localhost:5000/comment/reply/delete`, reply)
+      .post(`${HOST}/comment/reply/delete`, reply)
       .then((res) => {
         loadComment();
       });

@@ -8,10 +8,20 @@ const {
   deleteComment,
   updateComment,
 } = require("../controllers/commentController");
-const { replyComment, deleteReply } = require("../controllers/replyController");
+const {
+  replyComment,
+  deleteReply,
+  updateReply,
+} = require("../controllers/replyController");
+
 router.route("/reply").post(replyComment);
 router.route("/reply/delete").post(deleteReply);
+router.route("/reply/:id").put(updateReply);
 
 router.route("/").get(getComment).post(postComment);
-router.route("/:id").get(getCommentById).put(updateComment).delete(deleteComment);
+router
+  .route("/:id")
+  .get(getCommentById)
+  .put(updateComment)
+  .delete(deleteComment);
 module.exports = router;

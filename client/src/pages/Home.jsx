@@ -3,6 +3,7 @@ import axios from "axios";
 import data from "../asserts/data.json";
 import Comment from "../Components/Comment";
 import AddComment from "../Components/AddComment";
+const HOST = import.meta.env.VITE_URL;
 
 function Home() {
   const [comments, setComments] = useState("");
@@ -11,7 +12,7 @@ function Home() {
 
   const idAddComment = useId();
   function loadComments() {
-    axios.get("http://localhost:5000/comment").then((res) => {
+    axios.get(HOST + "/comment").then((res) => {
       setComments(res.data);
       // setCurrentUser(res.data[0].currentUser);
     });
@@ -42,6 +43,7 @@ function Home() {
                           <Comment
                             key={child._id}
                             isChild={true}
+                            setComments={setComments}
                             parentName={parentComment.user.username}
                             parentId={parentComment._id}
                             childId={child._id}
