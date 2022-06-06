@@ -3,11 +3,33 @@ import { comment } from "postcss";
 import React, { useState, useEffect, createContext } from "react";
 import { FaReply } from "react-icons/fa";
 
-function Comment({ commentData, commentId, loadComment }) {
+function Comment({
+  isChild,
+  childId,
+  commentData,
+  parentId,
+  loadComment,
+  replyTo,
+  
+}) {
+  const handleReplyTo = (id) => {
+    isChild ? replyTo(id) : replyTo(parentId);
+    loadComment();
+  };
   const deleteComment = (id) => {
     axios.delete(`http://localhost:5000/comment/${id}`).then((res) => {
       loadComment();
+      console.log(res);
     });
+  };
+  const deleteReply = (id) => {
+    axios.delete(`http://localhost:5000/comment/reply`).then((res) => {
+      loadComment();
+      console.log(res);
+    });
+  };
+  const handleDeleteButton = (isChild, childId, parentId) => {
+    isChild ? deleteReply(childId) : deleteComment(parentId);
   };
   return (
     <>
@@ -39,7 +61,7 @@ function Comment({ commentData, commentId, loadComment }) {
             <button className="text-upDown">-</button>
             <button
               className="btn btn-sm"
-              onClick={(x) => deleteComment(commentId)}
+              onClick={(x) => handleDeleteButton(isChild, childId, parentId)}
             >
               Delete
             </button>
@@ -47,7 +69,12 @@ function Comment({ commentData, commentId, loadComment }) {
           <div className="reply flex gap-2 items-center">
             {" "}
             <FaReply />
-            <button className="text-upDown font-bold">Reply</button>
+            <button
+              className="text-upDown font-bold"
+              onClick={(x) => handleReplyTo(parentId)}
+            >
+              Reply
+            </button>
           </div>
         </figure>
       </section>

@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-function AddComment({ userImage,loadComment }) {
+function AddComment({ userImage, loadComment, replyTo }) {
   const [newComment, setNewComment] = useState("");
-  const printComment = () => {
+  const postComment = () => {
     let newCommentObject = {
-      id: 3,
       content: newComment,
       createdAt: "1 month ago",
       score: 0,
@@ -21,9 +20,38 @@ function AddComment({ userImage,loadComment }) {
     axios
       .post("http://localhost:5000/comment", newCommentObject)
       .then((res) => {
-        console.log(res)
-        loadComment()
+        console.log(res);
+        console.log("comment ne")
+        loadComment();
       });
+  };
+  const replyToComment = (replyTo) => {
+    let replyCommentObject = {
+      parentId: replyTo,
+      content: newComment,
+      createdAt: "1 month ago",
+      score: 0,
+      replyingTo: replyTo,
+      user: {
+        image: {
+          png: "./images/avatars/image-amyrobson.png",
+          webp: "./images/avatars/image-amyrobson.webp",
+        },
+        username: "Cho Rach",
+      },
+    };
+    axios
+      .post("http://localhost:5000/comment/reply", replyCommentObject)
+      .then((res) => {
+        console.log(res);
+        console.log("reply")
+        loadComment();
+      });
+  };
+  const doComment = () => {
+    console.log(replyTo);
+
+    replyTo ? replyToComment(replyTo) : postComment();
   };
   return (
     <>
@@ -36,7 +64,7 @@ function AddComment({ userImage,loadComment }) {
         ></textarea>
         <div className="bottom flex justify-between items-center">
           <img src={`src/asserts/${userImage}`} alt="" className=" w-8" />
-          <button className="btn btn-primary" onClick={(x) => printComment()}>
+          <button className="btn btn-primary" onClick={(x) => doComment()}>
             SEND
           </button>
         </div>
