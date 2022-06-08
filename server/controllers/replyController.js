@@ -14,8 +14,8 @@ const replyComment = async (req, res) => {
       score: score,
       replyingTo: replyTo,
       user: req.body.user,
-    };
-    await comment.replies.push(commentReply);
+    }
+    await comment.replies.push(commentReply)
     await comment.save((err) => {
       err ? console.log(err) : console.log("reply saved");
     });

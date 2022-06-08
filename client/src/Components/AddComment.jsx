@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 const HOST = import.meta.env.VITE_URL;
 
-function AddComment({ userImage, loadComment, replyTo, commentInput }) {
+function AddComment({ userImage, loadComment, replyTo, isReply }) {
   const [newComment, setNewComment] = useState("");
+  const commentTextarea = useRef();
+
   const postComment = () => {
     let newCommentObject = {
       content: newComment,
@@ -28,11 +30,11 @@ function AddComment({ userImage, loadComment, replyTo, commentInput }) {
       return res.data.user.username;
     });
   };
-  const replyToComment = async (replyTo) => {
+  const replyToComment = async (parentId) => {
     const removed = newComment.substring(newComment.indexOf(" ") + 1);
-    const parentName =  await getUserName(replyTo);
+    const parentName = await getUserName(parentId);
     let replyCommentObject = {
-      parentId: replyTo,
+      parentId: parentId,
       content: removed,
       createdAt: "1 month ago",
       score: 0,
@@ -46,18 +48,26 @@ function AddComment({ userImage, loadComment, replyTo, commentInput }) {
       },
     };
 
-    await axios.post(HOST + "/comment/reply", replyCommentObject).then((res) => {
-      loadComment();
-    });
+    await axios
+      .post(HOST + "/comment/reply", replyCommentObject)
+      .then((res) => {
+        loadComment();
+      });
   };
-  const doComment = () => {
-    replyTo ? replyToComment(replyTo) : postComment();
+  const doComment = (parentId) => {
+    replyTo ? replyToComment(parentId) : postComment();
   };
+  const setMention = async () =>{
+     replyTo ? commentTextarea.current.value =  `@${ await getUserName(replyTo)} `:null
+  }
+  useEffect(() => {
+    setMention()
+  }, [isReply]);
   return (
     <>
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 w-full ">
         <textarea
-          ref={commentInput}
+          ref={commentTextarea}
           onChange={(e) => setNewComment(e.target.value)}
           className="textarea textarea-bordered w-full"
           placeholder="Add a comment..."

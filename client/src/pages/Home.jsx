@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useId, createContext,useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useId,
+  createContext,
+  useRef,
+} from "react";
 import axios from "axios";
 import data from "../asserts/data.json";
 import Comment from "../Components/Comment";
@@ -9,8 +15,7 @@ const HOST = import.meta.env.VITE_URL;
 function Home() {
   const [comments, setComments] = useState("");
   const [replyTo, setReplyTo] = useState("");
-  const [modal, setModal] = useState()
-  const commentInput = useRef();
+  const [modal, setModal] = useState();
   const idAddComment = useId();
 
   function loadComments() {
@@ -27,15 +32,15 @@ function Home() {
         {/* Comments */}
         {comments
           ? comments.map((parentComment) => (
-              <div className="flex flex-col gap-5 ">
+              <div className="flex flex-col gap-5 w-full ">
                 <Comment
                   key={parentComment._id}
                   parentId={parentComment._id}
                   setComments={setComments}
                   commentData={parentComment}
                   loadComment={loadComments}
-                  replyTo={setReplyTo}
-                  commentInput={commentInput}
+                  replyTo={replyTo}
+                  setReplyTo={setReplyTo}
                   setModal={setModal}
                 ></Comment>
                 {/* Sub comments of the comment */}
@@ -52,10 +57,11 @@ function Home() {
                             childId={child._id}
                             commentData={child}
                             loadComment={loadComments}
-                            replyTo={setReplyTo}
-                            commentInput={commentInput}
+                            replyTo={replyTo}
+                            setReplyTo={setReplyTo}
                             setModal={setModal}
                           ></Comment>
+                          
                         </div>
                       ))
                     : null}
@@ -66,15 +72,12 @@ function Home() {
 
         <AddComment
           key={idAddComment}
-          commentInput={commentInput}
           loadComment={loadComments}
           replyTo={replyTo}
         ></AddComment>
       </div>
-      <Modal modal={modal} loadComment={loadComments} ></Modal>
-      
+      <Modal modal={modal} loadComment={loadComments}></Modal>
     </div>
-
   );
 }
 

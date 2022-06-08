@@ -1,22 +1,32 @@
 import axios from "axios";
 import { comment } from "postcss";
-import React, { useState, useEffect, createContext, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useRef,
+  useId,
+} from "react";
 import { FaReply } from "react-icons/fa";
 import CommentContent from "./CommentContent";
 import UpdateComment from "./UpdateComment";
-
+import AddComment from "./AddComment";
 function Comment({
   isChild,
   childId,
   commentData,
   parentId,
   loadComment,
+  setReplyTo,
   replyTo,
   setComments,
   commentInput,
   setModal,
 }) {
   const [editStatus, setEditStatus] = useState(false);
+  const [isReply, setIsReply] = useState(false);
+
+  const idAddComment = useId();
   return (
     <>
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 ">
@@ -46,6 +56,7 @@ function Comment({
         ) : (
           <CommentContent
             replyTo={replyTo}
+            setReplyTo={setReplyTo}
             loadComment={loadComment}
             commentData={commentData}
             isChild={isChild}
@@ -53,11 +64,21 @@ function Comment({
             parentId={parentId}
             editStatus={editStatus}
             setEditStatus={setEditStatus}
-            commentInput={commentInput}
             setModal={setModal}
+            setIsReply={setIsReply}
+            isReply={isReply}
           />
         )}
       </section>
+      {isReply ? (
+        <AddComment
+          key={idAddComment}
+          isReply={isReply}
+          loadComment={loadComment}
+          replyTo={replyTo}
+          setReplyTo={setReplyTo}
+        ></AddComment>
+      ) : null}
     </>
   );
 }

@@ -84,8 +84,15 @@ const getComment = async (req, res) => {
 const getCommentById = async (req, res) => {
   try {
     const comments = await Comment.findById(req.params.id);
-
-    res.json(comments);
+    if (comments) {
+      res.json(comments);
+    } else {
+      const subComment = await Comment.findOne({
+        "replies._id": req.params.id,
+      });
+      
+      res.json(subComment.replies.id(req.params.id));
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
