@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 const HOST = import.meta.env.VITE_URL;
 
-function AddComment({ userImage, loadComment, replyTo, isReply }) {
+function AddComment({ userImage, loadComment, replyTo,setIsReply, isReply }) {
   const [newComment, setNewComment] = useState("");
   const commentTextarea = useRef();
 
@@ -30,15 +30,14 @@ function AddComment({ userImage, loadComment, replyTo, isReply }) {
       return res.data.user.username;
     });
   };
-  const replyToComment = async (parentId) => {
+  const replyToComment = async (replyTo) => {
     const removed = newComment.substring(newComment.indexOf(" ") + 1);
-    const parentName = await getUserName(parentId);
+    const replyToName = await getUserName(replyTo);
     let replyCommentObject = {
-      parentId: parentId,
       content: removed,
       createdAt: "1 month ago",
       score: 0,
-      replyingTo: parentName,
+      replyingTo: replyToName,
       user: {
         image: {
           png: "./images/avatars/image-juliusomo.png",
@@ -54,8 +53,9 @@ function AddComment({ userImage, loadComment, replyTo, isReply }) {
         loadComment();
       });
   };
-  const doComment = (parentId) => {
-    replyTo ? replyToComment(parentId) : postComment();
+  const doComment = (replyTo) => {
+    replyTo ? replyToComment(replyTo) : postComment();
+    setIsReply(false)
   };
   const setMention = async () =>{
      replyTo ? commentTextarea.current.value =  `@${ await getUserName(replyTo)} `:null
@@ -78,7 +78,7 @@ function AddComment({ userImage, loadComment, replyTo, isReply }) {
             alt=""
             className=" w-8"
           />
-          <button className="btn btn-primary" onClick={(x) => doComment()}>
+          <button className="btn btn-primary" onClick={(x) => doComment(replyTo)}>
             SEND
           </button>
         </div>

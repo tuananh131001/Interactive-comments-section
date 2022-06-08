@@ -74,9 +74,11 @@ function Comment({
         <AddComment
           key={idAddComment}
           isReply={isReply}
+          setIsReply={setIsReply}
           loadComment={loadComment}
           replyTo={replyTo}
           setReplyTo={setReplyTo}
+
         ></AddComment>
       ) : null}
     </>

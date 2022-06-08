@@ -47,7 +47,7 @@ function Home() {
                 <div className="sub-comments flex flex-col items-end gap-5 border-line border-l-2">
                   {parentComment.replies
                     ? parentComment.replies.map((child) => (
-                        <div className="w-11/12">
+                        <div className="flex flex-col gap-5 w-11/12">
                           <Comment
                             key={child._id}
                             isChild={true}
@@ -73,7 +73,6 @@ function Home() {
         <AddComment
           key={idAddComment}
           loadComment={loadComments}
-          replyTo={replyTo}
         ></AddComment>
       </div>
       <Modal modal={modal} loadComment={loadComments}></Modal>
