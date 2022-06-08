@@ -23,7 +23,7 @@ function Comment({
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 ">
         <div className="flex items-center gap-3">
           <img
-            src={"public/" + commentData.user.image.png}
+            src={ commentData.user.image.png}
             alt=""
             className=" w-8"
           />
