@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
+import imageJuliusomo from "../public/images/avatars/image-juliusomo.png"
 const HOST = import.meta.env.VITE_URL;
 
 function AddComment({ userImage, loadComment, replyTo,setIsReply, isReply }) {
@@ -74,7 +75,7 @@ function AddComment({ userImage, loadComment, replyTo,setIsReply, isReply }) {
         ></textarea>
         <div className="bottom flex justify-between items-center">
           <img
-            src="src/public/images/avatars/image-juliusomo.png"
+            src={imageJuliusomo}
             alt=""
             className=" w-8"
           />
