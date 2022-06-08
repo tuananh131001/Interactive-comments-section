@@ -55,14 +55,14 @@ function CommentContent({
       <figure className="flex justify-between items-center">
         <div className="vote bg-bgColor flex justify-center items-center p-2 gap-5 rounded-md">
           <button
-            className=" text-upDown"
+            className=" text-upDown hover:opacity-80"
             onClick={(x) => voteComment(parentId, childId)}
           >
             +
           </button>
-          <button className="text-upDown font-bold">{commentData.score}</button>
+          <button className="text-upDown font-bold ">{commentData.score}</button>
           <button
-            className="text-upDown"
+            className="text-upDown hover:opacity-80"
             onClick={(x) => devoteComment(parentId, childId)}
           >
             -
@@ -80,7 +80,7 @@ function CommentContent({
               </svg>
               <label
                 for="my-modal"
-                className="text-red modal-button cursor-pointer"
+                className="text-red modal-button cursor-pointer hover:opacity-80"
                 onClick={(x) =>
                   setModal({
                     isChild: isChild,
@@ -92,7 +92,7 @@ function CommentContent({
                 Delete
               </label>
             </div>
-            <div className="reply flex items-center gap-2 text-mention">
+            <div className="reply flex items-center gap-2 text-mention hover:opacity-80">
               <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M13.479 2.872 11.08.474a1.75 1.75 0 0 0-2.327-.06L.879 8.287a1.75 1.75 0 0 0-.5 1.06l-.375 3.648a.875.875 0 0 0 .875.954h.078l3.65-.333c.399-.04.773-.216 1.058-.499l7.875-7.875a1.68 1.68 0 0 0-.061-2.371Zm-2.975 2.923L8.159 3.449 9.865 1.7l2.389 2.39-1.75 1.706Z"
@@ -109,7 +109,7 @@ function CommentContent({
             </div>
           </figure> : null}
           {commentData.user.username !== "juliusomo" ? (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 hover:opacity-80">
               <FaReply />{" "}
               <button
                 className="text-upDown font-bold"
