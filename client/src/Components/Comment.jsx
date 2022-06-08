@@ -13,21 +13,24 @@ function Comment({
   loadComment,
   replyTo,
   setComments,
-  commentInput
+  commentInput,
 }) {
   const [editStatus, setEditStatus] = useState(false);
   return (
     <>
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 ">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <img
             src={`src/asserts/${commentData.user.image.png}`}
             alt=""
             className=" w-8"
           />
           <h3 className="font-bold">{commentData.user.username}</h3>
-          <h3 className="text-paragraph">{commentData.createdAt}</h3>
+          {commentData.user.username === "juliusomo" ? (
+            <h3 className=" text-white px-1 text-xs bg-upDown">you</h3>
+          ) : null}
 
+          <h3 className="text-paragraph">{commentData.createdAt}</h3>
         </div>{" "}
         {editStatus ? (
           <UpdateComment

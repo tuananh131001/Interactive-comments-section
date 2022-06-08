@@ -16,7 +16,6 @@ function CommentContent({
   commentInput,
 }) {
   const handleReplyTo = (id) => {
-    console.log(commentInput.current.value );
     commentInput.current.value = `@${commentData.user.username} `
     isChild ? replyTo(id) : replyTo(parentId);
     loadComment();
@@ -40,7 +39,7 @@ function CommentContent({
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <p className="text-paragraph">
         {commentData.replyingTo ? (
           <span className=" text-mention font-bold">

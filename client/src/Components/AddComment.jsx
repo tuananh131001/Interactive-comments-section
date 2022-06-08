@@ -11,10 +11,10 @@ function AddComment({ userImage, loadComment, replyTo, commentInput }) {
       score: 0,
       user: {
         image: {
-          png: "./images/avatars/image-amyrobson.png",
-          webp: "./images/avatars/image-amyrobson.webp",
+          png: "./images/avatars/image-juliusomo.png",
+          webp: "./images/avatars/image-juliusomo.webp",
         },
-        username: "Cho Rach",
+        username: "juliusomo",
       },
       replies: [],
     };
@@ -24,32 +24,34 @@ function AddComment({ userImage, loadComment, replyTo, commentInput }) {
       loadComment();
     });
   };
-  const replyToComment = (replyTo) => {
+  const getUserName = async (parentId) => {
+    return await axios.get(HOST + `/comment/${parentId}`).then((res) => {
+      return res.data.user.username;
+    });
+  };
+  const replyToComment = async (replyTo) => {
     const removed = newComment.substring(newComment.indexOf(" ") + 1);
-    console.log(removed)
+    const parentName =  await getUserName(replyTo);
     let replyCommentObject = {
       parentId: replyTo,
-      content: newComment,
+      content: removed,
       createdAt: "1 month ago",
       score: 0,
-      replyingTo: replyTo,
+      replyingTo: parentName,
       user: {
         image: {
-          png: "./images/avatars/image-amyrobson.png",
-          webp: "./images/avatars/image-amyrobson.webp",
+          png: "./images/avatars/image-juliusomo.png",
+          webp: "./images/avatars/image-amyrjuliusomoobson.webp",
         },
-        username: "Cho Rach",
+        username: "juliusomo",
       },
     };
-    axios.post(HOST + "/comment/reply", replyCommentObject).then((res) => {
-      console.log(res);
-      console.log("reply");
+
+    await axios.post(HOST + "/comment/reply", replyCommentObject).then((res) => {
       loadComment();
     });
   };
   const doComment = () => {
-    console.log(replyTo);
-
     replyTo ? replyToComment(replyTo) : postComment();
   };
   return (
@@ -62,7 +64,11 @@ function AddComment({ userImage, loadComment, replyTo, commentInput }) {
           placeholder="Add a comment..."
         ></textarea>
         <div className="bottom flex justify-between items-center">
-          <img src={`src/asserts/${userImage}`} alt="" className=" w-8" />
+          <img
+            src="src/asserts/./images/avatars/image-juliusomo.png"
+            alt=""
+            className=" w-8"
+          />
           <button className="btn btn-primary" onClick={(x) => doComment()}>
             SEND
           </button>

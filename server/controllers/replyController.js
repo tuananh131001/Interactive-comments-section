@@ -7,7 +7,6 @@ const replyComment = async (req, res) => {
 
   const createdAt = "0 seconds ago";
   const score = 0;
-  console.log("active");
   Comment.findById(parentId, async (err, comment) => {
     const commentReply = {
       content: replyContent,

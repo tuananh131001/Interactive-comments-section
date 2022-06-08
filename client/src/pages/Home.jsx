@@ -7,16 +7,13 @@ const HOST = import.meta.env.VITE_URL;
 
 function Home() {
   const [comments, setComments] = useState("");
-  const [currentUser, setCurrentUser] = useState("");
   const [replyTo, setReplyTo] = useState("");
   const commentInput = useRef();
-
-
   const idAddComment = useId();
+
   function loadComments() {
     axios.get(HOST + "/comment").then((res) => {
       setComments(res.data);
-      // setCurrentUser(res.data[0].currentUser);
     });
   }
   useEffect(() => {

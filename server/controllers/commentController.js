@@ -1,7 +1,7 @@
 const Comment = require("../models/Comment");
 
 const addAllComment = async (req, res) => {
-  Comment.deleteMany({},x=>console.log(x))
+  Comment.deleteMany({}, (x) => console.log(x));
   const data = {
     comments: {
       id: 1,
@@ -19,8 +19,58 @@ const addAllComment = async (req, res) => {
       replies: [],
     },
   };
+  const data2 = {
+    comments: {
+      id: 2,
+      content:
+        "Woah, your project looks awesome! How long have you been coding for? I'm still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!",
+      createdAt: "2 weeks ago",
+      score: 5,
+      user: {
+        image: {
+          png: "./images/avatars/image-maxblagun.png",
+          webp: "./images/avatars/image-maxblagun.webp",
+        },
+        username: "maxblagun",
+      },
+      replies: [
+        {
+          id: 3,
+          content:
+            "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
+          createdAt: "1 week ago",
+          score: 4,
+          replyingTo: "maxblagun",
+          user: {
+            image: {
+              png: "./images/avatars/image-ramsesmiron.png",
+              webp: "./images/avatars/image-ramsesmiron.webp",
+            },
+            username: "ramsesmiron",
+          },
+        },
+        {
+          id: 4,
+          content:
+            "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
+          createdAt: "2 days ago",
+          score: 2,
+          replyingTo: "ramsesmiron",
+          user: {
+            image: {
+              png: "./images/avatars/image-juliusomo.png",
+              webp: "./images/avatars/image-juliusomo.webp",
+            },
+            username: "juliusomo",
+          },
+        },
+      ],
+    },
+  };
   const comment = await new Comment(data.comments);
+  const comment2 = await new Comment(data2.comments);
   comment.save();
+  comment2.save()
 };
 
 const getComment = async (req, res) => {
@@ -41,7 +91,6 @@ const getCommentById = async (req, res) => {
   }
 };
 const postComment = async (req, res) => {
-  console.log(req.body);
   const comments = new Comment(req.body);
   try {
     const newItem = await comments.save();
