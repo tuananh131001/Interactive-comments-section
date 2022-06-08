@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useId,
-} from "react";
+import React, { useState, useId } from "react";
 import CommentContent from "./CommentContent";
 import UpdateComment from "./UpdateComment";
 import AddComment from "./AddComment";
@@ -26,7 +23,7 @@ function Comment({
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 ">
         <div className="flex items-center gap-3">
           <img
-            src={`src/public/${commentData.user.image.png}`}
+            src={"public/" + commentData.user.image.png}
             alt=""
             className=" w-8"
           />
@@ -72,7 +69,6 @@ function Comment({
           loadComment={loadComment}
           replyTo={replyTo}
           setReplyTo={setReplyTo}
-
         ></AddComment>
       ) : null}
     </>
