@@ -14,6 +14,7 @@ function Comment({
   replyTo,
   setComments,
   commentInput,
+  setModal,
 }) {
   const [editStatus, setEditStatus] = useState(false);
   return (
@@ -53,6 +54,7 @@ function Comment({
             editStatus={editStatus}
             setEditStatus={setEditStatus}
             commentInput={commentInput}
+            setModal={setModal}
           />
         )}
       </section>

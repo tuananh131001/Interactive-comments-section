@@ -7,6 +7,8 @@ const {
   postComment,
   deleteComment,
   updateComment,
+  voteComment,
+  devoteComment
 } = require("../controllers/commentController");
 const {
   replyComment,
@@ -24,4 +26,6 @@ router
   .get(getCommentById)
   .put(updateComment)
   .delete(deleteComment);
-module.exports = router;
+router.route("/vote").post(voteComment)
+router.route("/devote").post(devoteComment)
+module.exports = router

@@ -52,5 +52,5 @@ const deleteReply = async (req, res) => {
 module.exports = {
   replyComment,
   deleteReply,
-  updateReply,
+  updateReply
 };

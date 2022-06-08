@@ -3,11 +3,13 @@ import axios from "axios";
 import data from "../asserts/data.json";
 import Comment from "../Components/Comment";
 import AddComment from "../Components/AddComment";
+import Modal from "../Components/Modal";
 const HOST = import.meta.env.VITE_URL;
 
 function Home() {
   const [comments, setComments] = useState("");
   const [replyTo, setReplyTo] = useState("");
+  const [modal, setModal] = useState()
   const commentInput = useRef();
   const idAddComment = useId();
 
@@ -34,6 +36,7 @@ function Home() {
                   loadComment={loadComments}
                   replyTo={setReplyTo}
                   commentInput={commentInput}
+                  setModal={setModal}
                 ></Comment>
                 {/* Sub comments of the comment */}
                 <div className="sub-comments flex flex-col items-end gap-5 border-line border-l-2">
@@ -51,6 +54,7 @@ function Home() {
                             loadComment={loadComments}
                             replyTo={setReplyTo}
                             commentInput={commentInput}
+                            setModal={setModal}
                           ></Comment>
                         </div>
                       ))
@@ -67,7 +71,10 @@ function Home() {
           replyTo={replyTo}
         ></AddComment>
       </div>
+      <Modal modal={modal} loadComment={loadComments} ></Modal>
+      
     </div>
+
   );
 }
 

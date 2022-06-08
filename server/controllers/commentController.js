@@ -69,8 +69,8 @@ const addAllComment = async (req, res) => {
   };
   const comment = await new Comment(data.comments);
   const comment2 = await new Comment(data2.comments);
-  comment.save();
-  comment2.save()
+  await comment.save();
+  await comment2.save();
 };
 
 const getComment = async (req, res) => {
@@ -117,6 +117,51 @@ const deleteComment = async (req, res) => {
   }
 };
 
+const voteComment = async (req, res) => {
+  if (req.body.parentId && req.body.childId) {
+    const comment = await Comment.findById(
+      req.body.parentId,
+      (err, comment) => {
+        comment.replies.id(req.body.childId).score =
+          comment.replies.id(req.body.childId).score + 1;
+        comment.save();
+      }
+    )
+      .clone()
+      .catch(function (err) {
+        console.log(err);
+      });
+    res.json(comment);
+  } else {
+    const comment = await Comment.findById(req.body.parentId);
+    comment.score = comment.score + 1;
+    const newComment = comment.save();
+    res.json(newComment);
+  }
+};
+const devoteComment = async (req, res) => {
+  if (req.body.parentId && req.body.childId) {
+    const comment = await Comment.findById(
+      req.body.parentId,
+      (err, comment) => {
+        comment.replies.id(req.body.childId).score =
+          comment.replies.id(req.body.childId).score - 1;
+        comment.save();
+      }
+    )
+      .clone()
+      .catch(function (err) {
+        console.log(err);
+      });
+    res.json(comment);
+  } else {
+    const comment = await Comment.findById(req.body.parentId);
+    comment.score = comment.score - 1;
+    const newComment = comment.save();
+    res.json(newComment);
+  }
+};
+
 module.exports = {
   getCommentById,
   getComment,
@@ -124,4 +169,6 @@ module.exports = {
   deleteComment,
   updateComment,
   addAllComment,
+  voteComment,
+  devoteComment,
 };

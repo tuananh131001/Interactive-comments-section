@@ -20,7 +20,6 @@ function AddComment({ userImage, loadComment, replyTo, commentInput }) {
     };
     axios.post(HOST + "/comment", newCommentObject).then((res) => {
       console.log(res);
-      console.log("comment ne");
       loadComment();
     });
   };
