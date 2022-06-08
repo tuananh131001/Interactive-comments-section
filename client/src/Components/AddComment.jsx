@@ -74,7 +74,7 @@ function AddComment({ userImage, loadComment, replyTo,setIsReply, isReply }) {
         ></textarea>
         <div className="bottom flex justify-between items-center">
           <img
-            src="src/asserts/./images/avatars/image-juliusomo.png"
+            src="src/public/./images/avatars/image-juliusomo.png"
             alt=""
             className=" w-8"
           />

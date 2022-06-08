@@ -1,13 +1,7 @@
-import axios from "axios";
-import { comment } from "postcss";
 import React, {
   useState,
-  useEffect,
-  createContext,
-  useRef,
   useId,
 } from "react";
-import { FaReply } from "react-icons/fa";
 import CommentContent from "./CommentContent";
 import UpdateComment from "./UpdateComment";
 import AddComment from "./AddComment";
@@ -32,7 +26,7 @@ function Comment({
       <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 ">
         <div className="flex items-center gap-3">
           <img
-            src={`src/asserts/${commentData.user.image.png}`}
+            src={`src/public/${commentData.user.image.png}`}
             alt=""
             className=" w-8"
           />

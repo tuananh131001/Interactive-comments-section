@@ -2,11 +2,8 @@ import React, {
   useState,
   useEffect,
   useId,
-  createContext,
-  useRef,
 } from "react";
 import axios from "axios";
-import data from "../asserts/data.json";
 import Comment from "../Components/Comment";
 import AddComment from "../Components/AddComment";
 import Modal from "../Components/Modal";
