@@ -41,7 +41,7 @@ function UpdateComment({
   return (
     <>
       {" "}
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 col-1/3">
         <textarea
           defaultValue={commentData.content}
           className="textarea textarea-bordered w-full"
