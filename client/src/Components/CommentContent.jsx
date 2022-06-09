@@ -44,8 +44,8 @@ function CommentContent({
   };
 
   return (
-    <div className="flex flex-col gap-5">
-      <p className="text-paragraph">
+    <>
+      <p className="col-1/3 lg:col-2/3 text-paragraph">
         {commentData.replyingTo ? (
           <span className=" text-mention font-bold">
             @{commentData.replyingTo}
@@ -53,24 +53,22 @@ function CommentContent({
         ) : null}{" "}
         {commentData.content}
       </p>
-      <figure className="flex justify-between items-center">
-        <div className="vote bg-bgColor flex justify-center items-center p-2 gap-5 rounded-md">
-          <button
-            className=" text-upDown hover:opacity-80"
-            onClick={(x) => voteComment(parentId, childId)}
-          >
-            +
-          </button>
-          <button className="text-upDown font-bold ">
-            {commentData.score}
-          </button>
-          <button
-            className="text-upDown hover:opacity-80"
-            onClick={(x) => devoteComment(parentId, childId)}
-          >
-            -
-          </button>
-        </div>
+      <div className="vote h-8 lg:h-24 lg:w-9/12  lg:row-1/3 lg:flex-col vote bg-bgColor flex justify-between items-center p-2 gap-1 rounded-md">
+        <button
+          className=" text-upDown hover:opacity-80"
+          onClick={(x) => voteComment(parentId, childId)}
+        >
+          +
+        </button>
+        <button className="text-upDown font-bold ">{commentData.score}</button>
+        <button
+          className="text-upDown hover:opacity-80"
+          onClick={(x) => devoteComment(parentId, childId)}
+        >
+          -
+        </button>
+      </div>
+      <figure className="reply lg:row-1/1 lg:col-3/4  flex justify-end items-center">
         <div className="reply flex gap-2 items-center">
           {" "}
           {commentData.user.username === "juliusomo" ? (
@@ -126,7 +124,7 @@ function CommentContent({
           ) : null}
         </div>
       </figure>
-    </div>
+    </>
   );
 }
 

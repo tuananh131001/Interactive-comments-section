@@ -20,8 +20,8 @@ function Comment({
   const idAddComment = useId();
   return (
     <>
-      <section className="comment bg-white p-4 rounded-xl drop-shadow-lg flex flex-col gap-3 ">
-        <div className="flex items-center gap-3">
+      <section className="lg:grid lg:grid-cols-4rem-1fr-auto grid grid-cols-100px-1fr comment bg-white p-4 rounded-xl drop-shadow-lg  gap-3 ">
+        <div className=" lg:col-2/3 col-1/3 row-span-1 flex items-center gap-3">
           <img
             src={ commentData.user.image.png}
             alt=""
