@@ -24,8 +24,8 @@ function Home() {
     loadComments();
   }, []);
   return (
-    <div className=" h-screen  flex flex-col flex-end items-center bg-bgColor">
-      <div className="comments-list flex flex-col gap-5 items-end  px-4 py-6">
+    <div className=" h-full  flex flex-col flex-end items-center bg-bgColor">
+      <div className="lg:w-1/2 comments-list flex flex-col gap-5 items-end  px-4 py-6">
         {/* Comments */}
         {comments
           ? comments.map((parentComment) => (

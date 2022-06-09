@@ -51,7 +51,7 @@ function UpdateComment({
           className="btn btn-sm"
           onClick={(x) => handleUpdate(isChild, parentId, childId, newComment)}
         >
-          Submit
+          UPDATE
         </button>
       </div>
     </>
